@@ -3,19 +3,19 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class UpdateUserDto {
 
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly name: string;
   
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly password: string;
   
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly email: string;
   
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly userType: string;
 
 }
