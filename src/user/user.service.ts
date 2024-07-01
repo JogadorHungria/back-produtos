@@ -23,9 +23,12 @@ export class UserService {
   async findAll() {
 
     return await prisma.user.findMany();
+
   }
 
+
   async findOne(id: number) {
+
     const user = await prisma.user.findUnique({
       where: {
         id,
@@ -43,7 +46,12 @@ export class UserService {
     return updateUserDto
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+
+    const userDeleted = await prisma.user.delete({
+        where:{id}
+      })
+
+    return userDeleted
   }
 }
