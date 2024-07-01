@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { prisma } from 'src/database/PrismaServiceDataBase';
 
@@ -42,16 +41,40 @@ export class UserService {
     return user
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
+
+    await prisma.user.update({
+
+      where: {id},
+      data: updateUserDto
+
+    })
+
     return updateUserDto
   }
 
   async remove(id: number) {
 
-    const userDeleted = await prisma.user.delete({
-        where:{id}
-      })
+    try {
 
-    return userDeleted
+      const user = await prisma.user.delete({
+        where: {
+          id,
+        },
+      });
+
+      return user;
+
+    } catch (error) {
+
+      if (error.code === 'P2025') { 
+        throw new NotFoundException(`Usuário com ID ${id} não encontrado`);
+      }
+      throw error;
+
+    }
   }
-}
+
+  
+  }
+
