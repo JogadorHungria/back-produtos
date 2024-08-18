@@ -27,6 +27,8 @@ model Product {
   name          String
   price         Float
   description   String
+  quantity      Int
+  img           String?
 
   @@map("products")
 }
