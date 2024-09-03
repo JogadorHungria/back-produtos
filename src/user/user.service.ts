@@ -21,7 +21,7 @@ export class UserService {
 
   async findAll() {
 
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({orderBy: {id: "asc"}});
 
   }
 
